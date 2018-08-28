@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.genepoint.lbsshow.dao.InshopByDayMapper" >
+	<resultMap type="com.genepoint.lbsshow.model.InshopByDay" id="InshopByDayResultMap">
+		<result column="building" property="building" jdbcType="VARCHAR"/>
+		<result column="shop_id" property="shopId" jdbcType="INTEGER"/>
+		<result column="count" property="count" jdbcType="INTEGER"/>
+		<result column="count_inshop" property="countInshop" jdbcType="INTEGER"/>
+		<result column="stay_time_average" property="averageStayTime" jdbcType="INTEGER"/>
+		<result column="time" property="time" jdbcType="BIGINT"/>
+		<result column="rate_inShop" property="rateInShop" jdbcType="DOUBLE"/>
+	    <result column="stay_time_type" property="stayTimeTypeTemp" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="getInshopByDay" parameterType="com.genepoint.lbsshow.model.InshopByDay" resultMap="InshopByDayResultMap">
+	 	select shop_id,count,count_inshop,stay_time_average from inshop_by_day where building = #{building} and time=#{time}
+	</select>
+	
+	<select id="getRateInShop" parameterType="com.genepoint.lbsshow.model.vo.InshopByDayVO" resultMap="InshopByDayResultMap">
+		select count,count_inshop,time from inshop_by_day where building=#{building} and shop_id=#{shopId} and time between #{timeStart} and #{timeEnd} order by time
+	</select>
+	
+	<select id="getStayTimeType" parameterType="com.genepoint.lbsshow.model.InshopByDay" resultMap="InshopByDayResultMap">
+		select stay_time_type from inshop_by_day where shop_id=#{shopId} and time=#{time} and building=#{building} limit 1
+	</select>
+</mapper>

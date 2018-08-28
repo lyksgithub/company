@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.genepoint.lbsshow.dao.MacTopkMapper" >
+	<resultMap type="com.genepoint.lbsshow.model.MacTopk" id="MacTopkResultMap">
+		<result column="mac" property="mac" jdbcType="VARCHAR"/>
+		<result column="count" property="count" jdbcType="INTEGER"/>
+		<result column="building" property="building" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="getMacTopk" resultMap="MacTopkResultMap" parameterType="String">
+		select mac,count from mac_topk where building=#{building} order by mac
+	</select>
+	
+	
+</mapper>

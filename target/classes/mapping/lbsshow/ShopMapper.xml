@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.genepoint.lbsshow.dao.ShopMapper" >
+	<resultMap type="com.genepoint.lbsshow.model.Shop" id="ShopResultMap">
+		<result column="building" property="building" jdbcType="VARCHAR"/>
+		<result column="floor" property="floor" jdbcType="VARCHAR"/>
+		<result column="shop_id" property="shopId" jdbcType="INTEGER"/>
+		<result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+		<result column="path" property="path" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="getAllShop" resultMap="ShopResultMap">
+		select building,floor,shop_id,shop_name,description,path from shop_list
+	</select>
+	
+	<select id="getShopByBuilding" resultMap="ShopResultMap">
+		select building,floor,shop_id,shop_name,description,path from shop_list where building = #{building}
+	</select>
+</mapper>

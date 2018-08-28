@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.genepoint.lbsshow.dao.MapPathMapper" >
+	<resultMap type="com.genepoint.lbsshow.model.MapPath" id="MapPathResultMap">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="path_id" property="pathId" jdbcType="INTEGER"/>
+		<result column="building" property="building" jdbcType="VARCHAR"/>
+		<result column="floor" property="floor" jdbcType="VARCHAR"/>
+		<result column="start_id" property="startId" jdbcType="INTEGER"/>
+		<result column="end_id" property="endId" jdbcType="INTEGER"/>
+		<result column="start_corx" property="startCorx" jdbcType="DOUBLE"/>
+		<result column="start_cory" property="startCory" jdbcType="DOUBLE"/>
+		<result column="end_corx" property="endCorx" jdbcType="DOUBLE"/>
+		<result column="end_cory" property="endCory" jdbcType="DOUBLE"/>
+	</resultMap>
+	
+	<select id="getMapPath" parameterType="String" resultMap="MapPathResultMap">
+		select floor,path_id,start_id,end_id,start_corx,start_cory,end_corx,end_cory from map_path where building=#{building}
+	</select>
+	
+</mapper>

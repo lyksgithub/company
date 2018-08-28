@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.genepoint.lbsshow.dao.HeatMapMapper">
+	<!-- <resultMap type="com.genepoint.lbsshow.model.vo.HeatMapVO" id="HeatMapResultMap"> 
+		<result column="x" property="x" jdbcType="DOUBLE"/> <result column="y" property="y" 
+		jdbcType="DOUBLE"/> <result column="value" property="value" jdbcType="INTEGER"/> 
+		<result column="dateTime" property="dateTime" jdbcType="DATE"/> </resultMap> -->
+
+	<select id="getHistoryHeatMap" parameterType="com.genepoint.lbsshow.model.vo.HeatMapVO"
+		resultType="com.genepoint.lbsshow.model.HetMapPosition">
+		SELECT
+		t.time dateTime,
+		corx x,
+		cory y,
+		count(1) value
+		FROM
+		(
+		SELECT
+		round(corx,5) corx,
+		round(cory,4) cory,
+		FROM_UNIXTIME(
+		FLOOR(time /
+		1000 / 60 / #{step}) * 60 * #{step},
+		'%Y-%m-%d %H:%i:%S'
+		) time
+		FROM
+		${tableName}
+		WHERE
+		building = #{building}
+		AND floor = #{floor}
+		AND time
+		BETWEEN #{start} AND #{end}
+		) t
+		GROUP BY
+		t.corx,
+		t.cory,
+		t.time
+		order by
+		dateTime
+	</select>
+	
+	<!-- 像素坐标 历史热力图sql-->
+	<!-- <select id="getHistoryHeatMap" parameterType="com.genepoint.lbsshow.model.vo.HeatMapVO"
+		resultType="com.genepoint.lbsshow.model.HetMapPosition">
+		SELECT
+		t.time dateTime,
+		round(t.corx) x,
+		round(t.cory) y,
+		count(1) value
+
+		FROM
+		(
+		SELECT
+		corx,
+		cory,
+		FROM_UNIXTIME(
+		1000 / 60 / #{step}) * 60 * #{step},
+		'%Y-%m-%d %H:%i:%S'
+		) time
+		FROM
+		${tableName}
+		WHERE
+		building = #{building}
+		AND floor = #{floor}
+		AND time
+		BETWEEN #{start} AND #{end}
+		) t
+		GROUP BY
+		t.corx,
+		t.cory,
+		t.time
+		order by dateTime
+	</select> -->
+
+</mapper>
